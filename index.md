@@ -19,7 +19,7 @@ q = q / 100
 
 vol = vol / 100
 
-
+```
 #!/usr/bin/env python
 import math
 import numpy as np
@@ -53,3 +53,4 @@ def BlackScholes(S,K,T,rf,q,vol):
 
 Test = BlackScholes(100,100,(30/365),5,0,25)
 print(Test)
+```
