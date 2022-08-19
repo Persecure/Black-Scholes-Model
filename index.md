@@ -1,37 +1,55 @@
-## Welcome to GitHub Pages
+# Black Scholes Model
 
-You can use the [editor on GitHub](https://github.com/Persecure/Black-Scholes-Model/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+The Black-Scholes model is used to determine the fair price or theoretical value of a call or put option based on certain variables. This code will showcase a simple python program utilizing various modules to calculate the Black-Scholes pricing model. The inputs of the variables can be changed in the "Test" variable. 
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+![image](https://user-images.githubusercontent.com/93418272/180991444-cded48dd-e524-443f-8e0f-8a52b29dda1d.png)
 
-### Markdown
+Breaking down the imported module functions:
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+np.log(x) = ln() 
+functionsi.norm.cdf = Cumulative normal distribution function
 
-```markdown
-Syntax highlighted code block
+math.exp = Return 'E' raised to the power of
 
-# Header 1
-## Header 2
-### Header 3
+Changes inputs in decimales:
 
-- Bulleted
-- List
+rf = rf / 100
 
-1. Numbered
-2. List
+q = q / 100
 
-**Bold** and _Italic_ and `Code` text
+vol = vol / 100
 
-[Link](url) and ![Image](src)
-```
 
-For more details see [Basic writing and formatting syntax](https://docs.github.com/en/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax).
+#!/usr/bin/env python
+import math
+import numpy as np
+import scipy.stats as si
+import math
 
-### Jekyll Themes
+def BlackScholes(S,K,T,rf,q,vol):
+    """
+        S = Stock price
+        K = Strike price
+        T = Time to maturity in years
+        rf = Risk-free rate
+        q = dividen rate
+        vol = volatility (standard deviation)
+    """
+    rf = rf / 100
+    q = q / 100
+    vol = vol / 100
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/Persecure/Black-Scholes-Model/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+    d1 = ((np.log(S/K)) + ((rf+0.5*vol**2)*T)) / (vol*(T**0.5))
+    Nd1 = si.norm.cdf(d1,0.0,1.0)
 
-### Support or Contact
+    d2 = d1 - (vol*(T**0.5))
+    Nd2 = si.norm.cdf(d2,0.0,1.0)
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+    Call = (S*Nd1) - (K*(math.exp(-rf*T))*Nd2)
+    
+    return Call
+    
+
+
+Test = BlackScholes(100,100,(30/365),5,0,25)
+print(Test)
